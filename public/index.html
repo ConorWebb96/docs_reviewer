@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docs Preview Diff</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <div>
+          <h1>Docs preview diff</h1>
+        </div>
+        <p class="lede">Compare markdown changes side by side across two git refs.</p>
+      </header>
+
+      <section class="controls">
+        <label>
+          <span>Repo path</span>
+          <input id="repoPath" placeholder="/Users/conorwebb/Desktop/work/docs" spellcheck="false" />
+        </label>
+        <label>
+          <span>Base ref</span>
+          <input id="baseRef" placeholder="main" spellcheck="false" />
+        </label>
+        <label>
+          <span>Compare ref</span>
+          <input id="compareRef" placeholder="feature/my-pr" spellcheck="false" />
+        </label>
+        <button id="loadBtn">Load changes</button>
+      </section>
+
+      <section class="statusbar">
+        <div id="repoStatus" class="status">Waiting for a repo path.</div>
+        <div id="fileStatus" class="status muted">No file selected.</div>
+      </section>
+
+      <main class="layout">
+        <section class="compare">
+          <div class="compare-grid">
+            <article class="pane">
+              <div class="pane-head">
+                <div>
+                  <p class="pane-label">Base</p>
+                  <h3 id="baseTitle">Not loaded</h3>
+                </div>
+              </div>
+              <div id="basePreview" class="preview"></div>
+            </article>
+
+            <article class="pane">
+              <div class="pane-head">
+                <div>
+                  <p class="pane-label">Compare</p>
+                  <h3 id="compareTitle">Not loaded</h3>
+                </div>
+              </div>
+              <div id="comparePreview" class="preview"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <section id="detailDrawer" class="detail-drawer" aria-hidden="true" hidden>
+      <div class="drawer-head">
+        <div>
+          <p class="details-label">Changed files</p>
+          <h3 id="detailFileName">Not loaded</h3>
+        </div>
+        <span id="detailFileType" class="detail-pill">0</span>
+      </div>
+      <div class="drawer-subhead">
+        <span id="detailFileIndex">File 0 of 0</span>
+        <span id="detailFilePath">Line changes</span>
+      </div>
+      <label class="drawer-search">
+        <span>Filter files</span>
+        <input id="fileSearch" type="search" placeholder="Type to filter the list" spellcheck="false" />
+      </label>
+      <div id="changeList" class="change-list"></div>
+    </section>
+
+    <div class="floating-actions" aria-label="File navigation controls">
+      <button id="prevFileBtn" class="nav-btn nav-btn-large" type="button" title="Previous file" aria-label="Previous file">◀</button>
+      <button id="layoutToggleBtn" class="nav-btn nav-btn-large" type="button" title="Switch to unified view" aria-label="Switch to unified view">⇄</button>
+      <button id="sourceToggleBtn" class="nav-btn nav-btn-large" type="button" title="Show rendered preview" aria-label="Show rendered preview">&lt;/&gt;</button>
+      <button id="viewFileBtn" class="nav-btn nav-btn-large" type="button" title="View file details" aria-label="View file details">ⓘ</button>
+      <button id="nextFileBtn" class="nav-btn nav-btn-large" type="button" title="Next file" aria-label="Next file">▶</button>
+    </div>
+  </body>
+</html>
