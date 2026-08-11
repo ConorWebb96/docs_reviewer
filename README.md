@@ -24,6 +24,7 @@ Then open `http://localhost:3000`.
 
 Set `local_repo_dir` in `.env` to the local git clone you want the app to open by default.
 Set `main_branch` and `compare_branch` to the branches you want prefilled in the UI.
+The compare ref must exist in the local clone. If you delete the local branch, the app will error unless you switch to another valid ref.
 
 Example:
 
@@ -41,5 +42,5 @@ compare_branch="feature/my-pr"
 
 ## Notes
 
-- The app reads file contents directly from `git show`, so the branch does not need to be checked out.
 - It will only show files matching `*.md`, `*.mdx`, or `*.markdown` that changed between the refs.
+- If the compare ref no longer exists in the local repo, the diff view will fail when it tries to run `git diff` and `git show`.
