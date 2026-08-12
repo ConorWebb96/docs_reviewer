@@ -17,6 +17,7 @@ export class DocsReviewerApp {
     this.sourceToggleBtn = document.getElementById('sourceToggleBtn');
     this.viewFileBtn = document.getElementById('viewFileBtn');
     this.nextFileBtn = document.getElementById('nextFileBtn');
+    this.fileSelect = document.getElementById('fileSelect');
     this.detailDrawer = document.getElementById('detailDrawer');
     this.fileSearchInput = document.getElementById('fileSearch');
     this.detailFileName = document.getElementById('detailFileName');
@@ -128,6 +129,25 @@ export class DocsReviewerApp {
     const index = this.getSelectedFileIndex();
     this.prevFileBtn.disabled = !hasFiles || index <= 0;
     this.nextFileBtn.disabled = !hasFiles || index === -1 || index >= visibleChanges.length - 1;
+    this.renderFileSelect();
+  }
+
+  renderFileSelect() {
+    const visibleChanges = this.getVisibleChanges();
+
+    this.fileSelect.replaceChildren();
+    this.fileSelect.disabled = visibleChanges.length === 0;
+
+    if (!visibleChanges.length) {
+      this.fileSelect.append(new Option('No files loaded', ''));
+      return;
+    }
+
+    visibleChanges.forEach((change) => {
+      const option = new Option(change.file, change.file);
+      option.selected = change.file === this.state.selectedFile;
+      this.fileSelect.append(option);
+    });
   }
 
   setViewOpen(open) {
@@ -474,6 +494,12 @@ export class DocsReviewerApp {
       if (index >= 0 && index < visibleChanges.length - 1) {
         this.selectFileByIndex(index + 1);
       }
+    });
+
+    this.fileSelect.addEventListener('change', () => {
+      const visibleChanges = this.getVisibleChanges();
+      const index = visibleChanges.findIndex((change) => change.file === this.fileSelect.value);
+      if (index >= 0) this.selectFileByIndex(index);
     });
 
     this.viewFileBtn.addEventListener('click', () => {
